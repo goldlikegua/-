@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>主页</title>
+    {% endblock %}
+</head>
+<body style="width: 980px;">
+    <div>
+        <form action="/home" method="post">
+            <a href="/home">首页</a>
+            {%if request.COOKIES.username%}
+                <a href="/user/msg">{{request.COOKIES.username}}</a>
+                <a href="/user/logout">退出</a>
+            {%else%}
+                <a href="/user/login">登录</a>
+                <a href="/user/register">注册</a>
+            {%endif%}
+        </form>
+    </div>
+    <hr width='1130px' align="center">
+    
+    <div style="background-color: hsl(0, 0%, 87%);">
+        <div>
+            {%block content%}
+                <p style="background-color: lawngreen; width:100px;">
+                    <a href="/plate/add_plate">add plate</a>
+                </p>
+                    {%for i in plate%}
+                        <p><a href="/plate/index/{{i.id}}">name:{{i.name}}</a></p>
+                        <p>msg:{{i.msg}}</p>
+                        <p>count_title:{{i.count_title}}</p>
+                        <br>
+                    {%endfor%}
+            {%endblock%}
+        </div>
+    </div>
+    
+</body>
+</html>

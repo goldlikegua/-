@@ -1,0 +1,38 @@
+{%extends 'home.html'%}
+
+{% block title %}
+    <title>msg</title>
+{% endblock %}
+
+{%block content%}
+<td>
+    <div>
+        <P>user_id:{{msg.uid}}</P>
+        <p>username:{{msg.name}}</p>
+        <p>birthday:{{msg.birthday}}</p>
+        <p>add_time:{{msg.add_time}}</p>
+        <p>sex:{{msg.get_sex_display}}</p>
+        <p>phone:{{msg.phone}}</p>
+        <p>level:{{msg.level}}</p>
+        <p> exp:{{msg.exp}}</p>
+        <br>
+        <p>关注:
+            {%for i in fan%}
+                <a href="/user/msg_other?id={{i.follow.uid}}">{{i.follow.name}}</a>
+            {%endfor%}
+        </p>
+        <form action="/user/msg_other?id={{msg.uid}}" method="post">
+            <p>
+                {% if is_follow == 2 %}
+                {% elif is_follow %}
+                <input type="submit" value="取消关注">
+                {% else %}
+                <input type="submit" value="关注">
+                {% endif %}
+            </p>
+        </form>
+    </div>
+</td>
+    
+    
+{%endblock%}

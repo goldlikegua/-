@@ -1,0 +1,75 @@
+{% extends 'home.html' %}
+
+{% block title %}
+<title>{{plate.name}}</title>
+{% endblock %}
+
+{% block content %}
+    <tr>
+        <td width='100%' style="height: 100%;">
+            <table width='100%' style="height: 100%;">
+                <tr>
+                    <td width='75%' style="height: 100%;">
+                        <div style="margin:30px 20px 30px 0px; height: 100%;">
+                            <div width='90%' style="margin-left: 20px;">
+                                <a href="" style="text-align: right; float: right; margin: 40px 27px -5px 20px; font-size: 7px;">收藏</a>
+                                <h1 style="margin: 40px 50px -5px 30px; font-size: 35pt;">{{plate.name}}</h1>
+                                <p style="margin: 10px 20px 10px 10px; font-size: 7px; text-align: right; float: right ;">主题：{{plate.count_title}}</p>
+                                <p style='margin: 10px 20px 10px 30px; font-size: 13px;'>版主: {{plate.plate_root_user.name}}</p>
+
+                            </div>
+                            <hr style="margin:0px 20px;">
+                            <div style="margin: 0px 20px;">
+                                <p style="text-decoration: none; margin: 18px 5px;">
+                                    <a href="/plate/index/{{plate.id}}?order={{'-update_time'}}" style="text-decoration: none; color: black;">全部</a> |
+                                    <a href="/plate/index/{{plate.id}}?order={{'-add_time'}}" style="text-decoration: none; color: black;">最新</a> |
+                                    <a href="/plate/index/{{plate.id}}?order={{'-count_comment'}}" style="text-decoration: none; color: black;">热门</a> |
+                                    <a href="/plate/index/{{plate.id}}?order={{'is_good'}}" style="text-decoration: none; color: black;">精华</a>
+                                </p>
+                            </div>
+                            <hr style="margin:0px 20px;">
+                            <div style="margin: 20px;">
+                                {% for article in articles %}
+                                <a href="/msg/article?id={{article.tid}}" style="text-decoration: black; color: black;" >
+                                    <div style="margin-top: 13px; height: 100px; background: rgb(196, 196, 196);">
+                                        <br>
+                                        <div style="margin-left: 20px;">
+                                            <h3 style="margin-top: 5px;">{{article.title}}</h3>
+                                            <p style="font-size: 7px;">{{article.user.name}} <font style="margin-left: 15px;">{{article.add_time}}</font></p>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </a>
+                                    
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                    <td width='25%' style="height:100%;">
+                        <div style="height: 100%;">
+                            <a href="/msg/add_article?plate_id={{plate.id}}" style="text-decoration: none;">
+                                <div style="background-color: rgb(65, 121, 225); height: 100px; display:block; margin:100px 20px 20px 20px;">
+                                    <br>
+                                    <p style="font-size: 30px; text-align: center; margin-top: 5px; color:whitesmoke; letter-spacing: 4px;">发帖</p>
+                                </div>
+                            </a>                 
+                            <br> <br><br>
+                            <div>
+                                <h2 align='center' style="margin-bottom: 40px;">板块信息</h2>
+                                <div style="margin: 0px 20px;">
+                                    <p>板块名称: {{plate.name}}</p>
+                                    <p>版主: <a href="/user/msg_other?id={{plate.plate_root_user.uid}}">{{plate.plate_root_user.name}}</a></p>
+                                    <p>简介: {{plate.msg}}</p>
+                                    <p>主题数: {{plate.count_title}}</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+{% endblock %}

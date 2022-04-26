@@ -1,0 +1,49 @@
+{% extends 'model.html' %}
+
+{% block title %}
+精选主页
+{% endblock %}
+
+
+{% block plate %}
+{% endblock %}
+{% block pagintion %}
+{% endblock %}
+{% block article %}
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			 <span class="label label-default">精选主题</span>
+             <br><br>
+			<ul>
+                {% for article in articles %}
+                <a href="/msg/article?id={{article.tid}}">
+				<li style="font-size: 13pt;">
+					{{article.title}}
+				</li>
+            </a>
+                {%endfor%}
+			</ul>
+		</div>
+		<div class="col-md-6 column">
+			 <span class="label label-default">精选板块</span>
+             <br>
+             <br>
+			<dl class="dl-horizontal">
+                {% for plate in plates %}
+                <a href="/plate/index/{{plate.id}}">
+				<dt style="font-size: 15pt; color: black;">
+					{{plate.name}}
+				</dt>
+				<dd style="font-size: 13pt; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: cadetblue;">
+					{{plate.msg}}
+				</dd>
+            </a>
+                {% endfor %}
+			</dl>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

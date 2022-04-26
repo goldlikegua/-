@@ -1,0 +1,22 @@
+{%extends 'home.html'%}
+
+{% block title %}
+    <title>{{plate.name}}</title>
+{% endblock %}
+
+{%block content%}
+    <td>
+        <a href="/plate/msg?id={{plate.id}}">{{plate.name}}</a>
+        <br>
+        <a href="/msg/add_article?plate_id={{plate.id}}">add article</a>
+
+        {%for i in article%}
+            <p><a href="/msg/article?id={{i.tid}}">{{i.title}}</a></p>
+            <p>content:{{i.content}}</p>
+            <p>user:{{i.user.name}}</p>
+            <br>
+        {%endfor%}
+    </td>
+    
+
+{%endblock%}

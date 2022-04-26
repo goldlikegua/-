@@ -1,0 +1,24 @@
+
+{% extends 'home_index.html' %}
+
+{% block title %}
+<title>{{article.title}}</title>
+{% endblock %}
+    
+{% block content %}
+    <p>标题：{{article.title}}</p>
+    <p>内容：{{article.content}}</p>
+    <p>发表时间：{{article.add_time}}</p>
+    <p><a>所属板块：{{plate.name}}</a></p>
+    <p><a href="user/msg_other?id={{user.id}}">发表者：{{user.name}}</a></p>
+    <br>
+    {% for coms in comment %}
+        <p>{{coms.add_time}}</p>
+        <p>{{coms.user.name}}:{{coms.content}}</p>       
+        <br>
+    {% endfor %}
+    <form action="/msg/comment?id={{article.tid}}" method="post">
+        <textarea name="comment" cols="30" rows="6"></textarea>
+        <input type="submit" value="发表评论">
+    </form>
+{% endblock %}

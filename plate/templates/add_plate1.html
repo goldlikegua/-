@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加板块</title>
+    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+
+</head>
+<body>
+    <div class="jumbotron">
+        <br><br>
+        <div class="container-fluid">
+            <div class="row">
+               
+                    <div class="col-md-6 col-md-offset-3">
+                        {% csrf_token %}
+                        <div class="panel panel-primary">
+                            <div class="panel-body" style="background-color: cadetblue; text-align: center;">
+                                <h1 style="color:rgb(238, 235, 190);">添加板块</h1>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="form-group">
+                                    <label>板块名称</label>
+                                    <input type="text" name="name" class="form-control" id="temp_name">
+                                </div>
+                                <div class="form-group">
+                                    <label>板块简介</label>
+                                    <br>
+                                    <textarea name="msg" class="form-control" cols="30" rows="10" id="temp_msg"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <p style="text-align:center;">
+                                        <input type="submit" value="提交" class="btn btn-success col-md-pull-2" id="submit_btn" style="background-color: cadetblue;">
+                                    </p>
+                                    <p style="text-align: center;">
+                                        <span class="error" style="color: red; font-size: 4px;"></span>
+                                    </p>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                
+            </div>
+        </div>
+
+      </div>
+</body>
+
+<script>
+    $("#submit_btn").click(function(){
+        //console.log(33)
+        $.ajax({
+            url:'/plate/add_plate',
+            type:'post',
+            data:{
+                name:$('#temp_name').val(),
+                msg:$("#temp_msg").val(),
+                csrfmiddlewaretoken: '{{csrf_token}}'
+        },
+        success: function (data){
+            console.log(data) 
+            // console.log(typeof data)
+            if(data.code==100){
+                window.setTimeout("location.href='/home'",2000);
+                $(".error").text(data.title+',系统将在两秒后跳转')
+                //$(".error").text('seccess')
+                //location.href='/home'
+            }else{
+                $(".error").text(data.title)
+            }
+        }
+        })
+    })
+
+</script>
+
+</html> 

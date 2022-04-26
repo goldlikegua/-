@@ -1,0 +1,101 @@
+{% extends 'model.html' %}
+
+{% block title %}
+搜索结果
+{% endblock %}
+
+{% block jumbotron %}
+{% endblock %}
+{% block plate %}
+{% endblock %}
+{% block pagintion %}
+{% endblock %}
+{% block article %}
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="list-group">
+				 <a href="#" class="list-group-item active"><span class="badge">{{mg_article}}</span>主题</a>
+                 {% for article in articles %}
+                 <a href="/msg/article?id={{article.tid}}">
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">
+                        {{article.title}}
+					</h4>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <p class="list-group-item-text">
+                                {% if article.content %}
+                                    {{article.content}}
+                                {% else %}
+                                    <br>
+                                {%endif%}
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="label label-default">热度：{{article.count_comment}}</span>
+                        </div>
+                    </div>
+				</div>
+                </a>
+                {% endfor %}
+                <br>
+                <a class="list-group-item active"> <span class="badge">{{mg_plate}}</span> 板块</a>
+                {% for plate in plates %}
+                <a href="/plate/index/{{plate.id}}">
+                <div class="list-group-item">
+					<h4 class="list-group-item-heading">
+                        {{plate.name}}
+					</h4>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <p class="list-group-item-text">
+                                {% if plate.msg %}
+                                    {{plate.msg}}
+                                {% else %}
+                                    <br>
+                                {%endif%}
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="label label-default">主题数：{{plate.count_title}}</span>
+                        </div>
+                    </div>
+
+				</div>
+            </a>
+                {% endfor %}
+                <br>
+                <a class="list-group-item active"> <span class="badge">{{mg_user}}</span> 用户</a>
+                {% for user in users %}
+                <a href="/user/msg_other?id={{user.uid}}">
+                <div class="list-group-item">
+					<h4 class="list-group-item-heading">
+                        {{user.name}}
+					</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-11">
+                            <p class="list-group-item-text">
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="label label-default">性别：
+                                {% if user.sex == 1 %}
+                                男
+                                {% else %}
+                                女
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+				</div>
+            </a>
+                {% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{%endblock%}
+

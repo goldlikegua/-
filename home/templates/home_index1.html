@@ -1,0 +1,63 @@
+{% extends 'model.html' %}
+
+{% block title %}
+精选主页
+{% endblock %}
+{% block jumbotron %}
+{% endblock %}
+
+{% block plate %}
+{% endblock %}
+{% block pagintion %}
+{% endblock %}
+{% block article %}
+<br>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			{% for plate in plates %}
+			{% for i in plate %}
+			{% if forloop.first %}
+			<div class="row">
+			{% endif %}
+				<div class="col-md-4">
+					<div class="thumbnail" >
+						{% load static %}
+						<img alt="300x200" src="/static/images/plate_images/photo{{i.id}}.jpg"  id="sample"/>
+						<div class="caption">
+							<h3>
+								{{i.name}}
+							</h3>
+								<p>
+									{{i.msg}}
+								</p>			
+								 <a class="btn btn-primary" href="/plate/index/{{i.id}}">进入</a> <a class="btn" href="/user/msg_other?id={{i.plate_root_user.uid}}">{{i.plate_root_user.name}}</a>
+						</div>
+					</div>
+				</div>
+			{% if forloop.last %}
+			</div>
+			{% endif %}
+			{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-5 column">
+				</div>
+				<div class="col-md-2 column">
+					<a href="/plate/add_plate">
+					 <button type="button" class="btn btn-lg btn-success btn-block" >创建板块</button>
+					</a>
+				</div>
+				<div class="col-md-5 column">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

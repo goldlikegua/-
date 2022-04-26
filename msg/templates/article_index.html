@@ -1,0 +1,67 @@
+{% extends 'home.html' %}
+
+{% block title %}
+<title>{{plate.name}}</title>
+{% endblock %}
+
+{% block content %}
+    <tr>
+        <td width='100%' style="height: 100%;">
+            <table width='100%' style="height: 100%;">
+                <tr>
+                    <td width='75%' style="height: 100%;">
+                        <div style="margin:30px 20px 30px 0px; height: 100%;">
+                            <div width='90%' style="margin-left: 20px;">
+                                <h1 style="margin: 20px;margin-top: 60pt;">{{article.title}}</h1>
+                                <p style="color: rgba(31, 28, 28, 0.74); font-size: 10pt; margin-bottom: 3px;">{{user.name}}<font style="margin-left:30px;">{{article.add_time}}</font></p>
+                                <br>
+                                <p style="margin-left: 30px;">{{article.content}}</p>
+                            </div>
+                            <hr style="margin:0px 20px;">
+                            <form action="/msg/comment?id={{article.tid}}" method="post">
+                                <p>
+                                    <textarea name="comment" cols="76" rows="2" style="margin: 10px 20px -10px 20px;"></textarea>
+                                    <input type="submit" value="评论">
+                                </p>
+                            </form>
+                            <div style="margin: 25px 20px 20px 20px;">
+                                <p style="font-size: 13px;">{{count}}条评论</p>
+                                <hr>
+                                {% for coms in comment %}
+                                <div >
+                                    <p style="font-size: 12pt;">{{coms.user.name}} <font style="color: darkgray; font-size: 10pt; margin-left: 30px;">{{coms.add_time}}</font></p>
+                                    <p style="font-size: 12pt;">{{coms.content | linebreaksbr}}</p>  
+                                </div>
+                                <hr color="#C1C2C7" size="1">           
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                    <td width='25%' style="height:100%;">
+                        <div style="height: 100%;">
+                            <a href="/plate/add_plate" style="text-decoration: none;">
+                                <div style="background-color: rgb(65, 121, 225); height: 100px; display:block; margin:100px 20px 20px 20px;">
+                                    <br>
+                                    <p style="font-size: 30px; text-align: center; margin-top: 5px; color:whitesmoke; letter-spacing: 4px;">发帖</p>
+                                </div>
+                            </a>                 
+                            <br> <br><br>
+                            <div>
+                                <h2 align='center' style="margin-bottom: 40px;">板块信息</h2>
+                                <div style="margin: 0px 20px;">
+                                    <p>板块名称: {{plate.name}}</p>
+                                    <p>版主: <a href="/user/msg_other?id={{plate.plate_root_user.uid}}">{{plate.plate_root_user.name}}</a></p>
+                                    <p>简介: {{plate.msg}}</p>
+                                    <p>主题数: {{plate.count_title}}</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+{% endblock %}

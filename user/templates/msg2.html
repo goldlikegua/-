@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap-theme.min.css">
+    <script src="/static/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    
+    
+</head>
+<body>
+    <div class="container">
+        <br>
+        <br>
+        <div class="row clearfix">
+            <div class="col-md-2 column">
+                <a href="/home">
+                    <button type="button" class="btn btn-lg btn-link">返回主页</button>
+                </a>
+                 
+                
+            </div>
+            <div class="col-md-8 column">
+                <div class="tabbable" id="tabs-961233">
+                    <ul class="nav nav-tabs">
+                        <li class="{{status1}}">
+                             <a href="#panel-46048" data-toggle="tab">我的发表</a>
+                        </li>
+                        <li class="{{status2}}">
+                             <a href="#panel-616904" data-toggle="tab">我的收藏</a>
+                        </li>
+                        <li class="{{status3}}">
+                             <a href="#panel-788250" data-toggle="tab">个人主页</a>
+                       </li>
+                    </ul>
+                    <div class="tab-content" >
+                        <div class="tab-pane {{status1}}" id="panel-46048">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                     <a href="#panel-1" data-toggle="tab">板块</a>
+                                </li>
+                                <li >
+                                     <a href="#panel-2" data-toggle="tab">主题</a>
+                                </li>
+                                <li>
+                                     <a href="#panel-3" data-toggle="tab">评论</a>
+                               </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div  class="tab-pane active" id="panel-1">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    板块编号
+                                                </th>
+                                                <th>
+                                                    板块名称
+                                                </th>
+                                                <th>
+                                                    创建时间
+                                                </th>
+                                                <th>
+                                                    主题数
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                                <th>
+                                                    操作
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in pub_plate %}
+                                        
+                                        <tbody>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    {{item.id}}
+                                                </td>
+                                                <td>
+                                                    <a href="/plate/index/{{item.id}}">
+                                                        {{item.name}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{item.CreateTime}}
+                                                </td>
+                                                <td>
+                                                    {{item.count_title}}
+                                                </td>
+                                                <td>
+                                                    {{item.is_active}}
+                                                </td>
+                                                <td>
+                                                    <form action="/plate/delete_plate" method="post">
+                                                        <input type="text" name="plate_id" value="{{item.id}}" style="display: none;">
+                                                        <input type="submit" value="删除">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            
+                                <div  class="tab-pane" id="panel-2">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    主题编号
+                                                </th>
+                                                <th>
+                                                    标题
+                                                </th>
+                                                <th>
+                                                    创建时间
+                                                </th>
+                                                <th>
+                                                    热度
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                                <th>
+                                                    操作
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in pub_article %}
+                                        <tbody>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    {{item.tid}}
+                                                </td>
+                                                <td>
+                                                    <a href="/msg/article?id={{item.tid}}">
+                                                        {{item.title}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{item.add_time}}
+                                                </td>
+                                                <td>
+                                                    {{item.count_comment}}
+                                                </td>
+                                                <td>
+                                                    {{item.is_active}}
+                                                </td>
+                                                <td>
+                                                    <form action="/msg/delete_article" method="post">
+                                                        <input type="text" name="tid" value="{{item.tid}}" style="display: none;">
+                                                        <input type="submit" value="删除">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="panel-3">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    评论编号
+                                                </th>
+                                                <th>
+                                                    内容
+                                                </th>
+                                                <th>
+                                                    时间
+                                                </th>
+                                                <th>
+                                                    主题
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                                <th>
+                                                    操作
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in pub_comment %}
+                                        <tbody>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    {{item.pid}}
+                                                </td>
+                                                <td>
+                                                    {{item.content}}
+                                                </td>
+                                                <td>
+                                                    {{item.add_time}}
+                                                </td>
+                                                <td>
+                                                    {{item.article.title}}
+                                                </td>
+                                                <td>
+                                                    {{item.status}}
+                                                </td>
+                                                <td>
+                                                    <form action="/msg/delete_comment" method="post">
+                                                        <input type="text" name="pid" value="{{item.pid}}" style="display: none;">
+                                                        <input type="submit" value="删除">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane {{status3}}" id="panel-788250">
+                            <br><br>
+                            <form action="/user/update_user" method="post">
+                            <div>  
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">账号</span>
+                                    <input type="text" class="form-control" value="{{msg.uid}}" aria-describedby="basic-addon1" readonly="true" name="user_id">
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">用户名</span>
+                                    <input type="text" class="form-control" value="{{msg.name}}" aria-describedby="basic-addon1" name="username" {{status}}>
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">生日</span>
+                                    <input type="text" class="form-control" value="{{msg.birthday}}" aria-describedby="basic-addon1" name="birthday" {{status}}>
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">注册时间</span>
+                                    <input type="text" class="form-control" value="{{msg.add_time}}" aria-describedby="basic-addon1" readonly="true" name="add_time">
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1" >性别</span>
+                                    {% if status == 'false' %}
+                                    <div style="margin-left: 30px;">
+                                        <input type="radio" class="btn-check" name="sex" id="success-outlined" autocomplete="off" value="1" {{sex1}}>
+                                        <label class="btn btn-outline-success" for="success-outlined"> 男</label>
+
+                                        <input type="radio" class="btn-check" name="sex" id="danger-outlined" autocomplete="off" value="2" {{sex2}}>
+                                        <label class="btn btn-outline-danger" for="danger-outlined">女</label>
+                                    </div>
+                                    
+                                    {% else %}
+                                    <input type="text" class="form-control" placeholder="{{msg.sex}}" aria-describedby="basic-addon1" readonly="true" >
+                                    {%endif%}
+                                  </div>
+                                  
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">手机号</span>
+                                    <input type="text" class="form-control" placeholder="{{msg.phone}}" aria-describedby="basic-addon1" name="phone" {{status}}>
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">等级</span>
+                                    <input type="text" class="form-control" placeholder="{{msg.level}}" aria-describedby="basic-addon1" readonly="true">
+                                  </div>
+                                
+                                  
+                                  <br>
+                                
+                                <form action="/user/msg_other?id={{msg.uid}}" method="post">
+                                    <p>
+                                        {% if is_follow == 2 %}
+                                        {% elif is_follow %}
+                                        <input type="submit" value="取消关注">
+                                        {% else %}
+                                        <input type="submit" value="关注">
+                                        {% endif %}
+                                    </p>
+                                </form>
+                                <br>
+                                {% if status == 'false' %}
+                                  <div style="text-align: center;">
+                                    <input class="btn btn-primary btn-lg"  type="submit">                                                                                                                                                                                                                                                                                         
+                                  </div>
+                              {%endif%}
+                            
+                              </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane {{status2}}" id="panel-616904">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                     <a href="#panel-4" data-toggle="tab">板块</a>
+                                </li>
+                                <li >
+                                     <a href="#panel-5" data-toggle="tab">主题</a>
+                                </li>
+                                <li>
+                                     <a href="#panel-6" data-toggle="tab">用户</a>
+                               </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div  class="tab-pane active" id="panel-4">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    板块编号
+                                                </th>
+                                                <th>
+                                                    板块名称
+                                                </th>
+                                                <th>
+                                                    创建时间
+                                                </th>
+                                                <th>
+                                                    主题数
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in save_plate %}
+                                        
+                                        <tbody>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    
+                                                    {{item.id}}
+                                                </td>
+                                                <td>
+                                                    <a href="/plate/index/{{item.id}}">
+                                                    {{item.name}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{item.CreateTime}}
+                                                </td>
+                                                <td>
+                                                    {{item.count_title}}
+                                                </td>
+                                                <td>
+                                                    {{item.is_active}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            
+                                <div  class="tab-pane" id="panel-5">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    主题编号
+                                                </th>
+                                                <th>
+                                                    
+                                                    标题
+                                                </th>
+                                                <th>
+                                                    创建时间
+                                                </th>
+                                                <th>
+                                                    热度
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in save_article %}
+                                        <tbody>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    {{item.tid}}
+                                                </td>
+                                                <td>
+                                                    <a href="/msg/article?id={{item.tid}}">
+                                                        {{item.title}}
+                                                    </a>
+                                                    
+                                                </td>
+                                                <td>
+                                                    {{item.add_time}}
+                                                </td>
+                                                <td>
+                                                    {{item.count_comment}}
+                                                </td>
+                                                <td>
+                                                    {{item.is_active}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="panel-6">
+                                    <table class="table table-hover" > 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    账号
+                                                </th>
+                                                <th>
+                                                    用户名
+                                                </th>
+                                                <th>
+                                                    性别
+                                                </th>
+                                                <th>
+                                            </tr>
+                                        </thead>
+                                        {%for i in fan%}
+                                        
+                                        <tbody>
+                                            <a href="/user/msg_other?id={{i.follow.uid}}"></a>
+                                            <tr class="{% cycle 'success' 'error' 'warning' 'info' %}">
+                                                <td>
+                                                    {{i.follow.uid}}
+                                                </td>
+                                                <td>
+                                                    <a href="/user/msg_other?id={{i.follow.uid}}">
+                                                    {{i.follow.name}}
+                                                </a>
+                                                </td>
+                                                <td>
+                                                    {% if i.follow.sex == 1 %}
+                                                    男
+                                                    {% else %}
+                                                    女
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </a>
+                                        </tbody>
+                                        
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-2 column">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

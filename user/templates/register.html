@@ -1,0 +1,26 @@
+{%extends 'login.html'%}
+
+
+{%block title%}
+<title>用户注册</title>
+{%endblock%}
+
+{% block content %}
+
+<form action="/user/register" method='post'>
+    <br><br>
+    <p> 
+        <input type="text" name='username' placeholder="请输入用户名">
+    </p>
+    <p>
+        <input type="password" name='password1' placeholder="请输入密码">
+    </p>
+    <p>
+        <input type="password" name='password2' placeholder="请再次输入密码">
+    </p>
+    <p>
+        <input type="submit" value='注册'>
+    </p>
+</form>
+
+{% endblock %}

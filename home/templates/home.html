@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>论坛首页</title>
+    {% endblock %}
+    <link rel="stylesheet" href="/static/bootstrap-3.4.1-dist/css/bootstrap.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+    
+    <table width='100%' style="height:900px" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width='100' style="height:100%;background-color: #f1f2f6" valign='top'></td>
+            <td width='80%' style="height:100%;" valign='top'>
+                
+                    
+
+                <table width="100%" style="height:100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width='100%' style="height: 100px;background-color:  rgba(0, 0, 0, 0.699);" valign='top'>
+                            <table width="100%" style="height:100%">
+                                <tr>
+                                    <td width='20%' style="height: 100%;">
+                                        {% load static %}
+                                       <a href="/home"><img src="{% static 'images/naf1.png' %}" alt="logo" width="100px" style="margin-top: 20px; margin-left:50px;"></a> 
+                                    </td>
+                                    <td width='100%' style="height: 100%;">
+                                        <div align='center' style="margin-top: 50px;" >
+                                            <a href="/home" style='margin-left: 20px;color: white;text-decoration:none;'>主页</a>
+                                            <a href="" style='margin-left: 40px;color: white;text-decoration:none;'>板块</a>
+                                            <a href="" style='margin-left: 40px;color: white;text-decoration:none;'>联系人</a>
+                                            <a href="" style='margin-left: 40px;color: white;text-decoration:none;'>个人信息</a>
+                                            <a href="" style='margin-left: 40px;color: white;text-decoration:none;'>设置</a>
+                                            {% if request.session.uid %}
+                                                <a href="/user/msg" style='margin-left: 150px; color: rgb(1, 233, 241);text-decoration:none;'>{{request.session.username}}</a>
+                                            {% elif request.COOKIES.uid %}
+                                                <a href="" style='margin-left: 150px; color: rgb(0, 255, 255);text-decoration:none;'>{{request.COOKIES.username}}</a>
+                                            {% else %}
+                                                <a href="/user/login" style='margin-left: 100px; color: white;text-decoration:none;'>登录</a>
+                                                <a href="/user/register" style='margin-left: 20px;color: white;text-decoration:none;'>注册</a>
+                                            {% endif %}
+                                        </div>
+                                        
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width='100%' style="height: 3px;" valign='top' bgcolor="gray"></td>
+                    </tr>
+                    
+                    {% block content %}
+                    <tr>
+                        
+                        <td width='100%' style="height:100%" valign='top' >
+                            <table width='100%' style="height: 100%;">
+                            {% for plate in plates %}
+                                <tr >
+                                    {% for i in plate %}
+                                    
+                                    <td width='50%' style="height: 160px;" >
+                                        {% if forloop.first %}
+                                        <div style="margin:35px 40px -10px 80px;">
+                                        {% else %}
+                                        <div style="margin:35px 80px -10px 40px;">
+                                        {% endif %}
+                                            <br>
+                                            <h2 style="margin-left: 50px;"> 板块名称:<a href="/plate/index/{{i.id}}">{{i.name}}</a> </h3>
+                                            <p style="margin-left: 50px;"> 简介:{{i.msg}}</p>
+                                            <p style="margin-left: 50px;font-size: 10pt;">
+                                                <a href="/user/msg_other?id={{i.plate_root_user.uid}}" style="color: rgb(76, 73, 250); margin-right: 30px;">{{i.plate_root_user.name}}</a> 
+                                                主题:{{i.count_title}}
+                                            </p>
+                                            <br>    
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </table>
+                            <div>
+                                <p align='center'>
+                                    <a href="/plate/add_plate" style="margin-top: 35px;font-size: 16pt;font-weight: 500; font-family:仿宋;" >创建板块</a>
+                                    <a style="margin-top: 35px;margin-left: 60px;font-size: 16pt;font-weight: 500; font-family:仿宋;">更多板块</a>
+                                </p>
+                                <br>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endblock %}
+                    <tr>
+                        
+                        <td width = '100%' style="background-color: #f1f2f6;height: 15px;"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td width='100%' style="height:80px ;background-color: rgba(246, 252, 255, 0.705);">
+                            <p align='center'>footer</p>
+                            
+                        </td>
+                    </tr>
+
+
+                        
+                </table>
+                
+            </td>
+            <td width='100' style="height:100%;background-color:#f1f2f6;" valign='top'></td>
+        </tr>
+
+    </table>
+
+
+
+</body>
+</html>

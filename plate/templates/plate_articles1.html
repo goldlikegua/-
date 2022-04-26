@@ -1,0 +1,171 @@
+{% extends 'model.html' %}
+
+{% block title %}
+{{plate.name}}
+{% endblock %}
+
+{% block jumbotron %}
+{% endblock %}
+{% block plate %}
+{% endblock %}
+{% block pagintion %}
+{% endblock %}
+{% block article %}
+{% block body %}
+
+{% endblock %}
+
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+                <ul class="breadcrumb">
+                    <li>
+                         <a href="/home">主页</a>
+                    </li>
+                    <li>
+                         <a href="/">板块</a>
+                    </li>
+                    {% block bread %}
+                    <li class="active">
+                        {{plate.name}}
+                    </li>
+                    {% endblock %}
+                </ul>
+				<div class="col-md-3 column">
+                    <br><br>
+                    <a href="/msg/add_article?plate_id={{plate.id}}" style="text-decoration: none;">
+                        <button type="button" class="btn btn-block btn-info btn-lg" style="height: 80px; width: 220px;">
+                            <p style="font-size: 30px; text-align: center; margin-top: 5px; color:whitesmoke; letter-spacing: 4px;">
+                                发帖
+                            </p>
+                        </button>
+                    </a>
+				</div>
+				<div class="col-md-9 column">
+                    {% block article_title %}
+					<div class="page-header row">
+                        
+                            <h1>
+                                <div class="col-md-10 column">
+                                    {{plate.name}} 
+                                </div>
+                                <div class="col-md-2 column">
+                                    <form action="/plate/save_plate" method="post">
+                                        {% if is_save %}
+                                        <input type="text" style="display: none;" value="{{plate.id}}" name="id">
+                                        <small> <input type="submit" value="取消关注"></small>
+                                        {% else %}
+                                        <input type="text" style="display: none;" value="{{plate.id}}" name="id">
+                                        <small> <input type="submit" value="关注"></small>
+                                        {% endif %}
+                                    </form>
+                                    
+                                </div>
+                            </h1> 
+						
+					</div>
+                    {% endblock %}
+				</div>
+				<div class="col-md-0 column">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-3 column">
+                    <br><br><br>
+                    <div class="panel panel-primary" style="width: 85%;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                板块信息
+                            </h3>
+                        </div>
+                        <div class="panel-footer">
+                            板块名称
+                        </div>
+                        <div class="panel-body">
+                            {{plate.name}}
+                        </div>
+                        <div class="panel-footer">
+                            版主
+                        </div>
+                        <div class="panel-body">
+                            <a href="/user/msg_other?id={{plate.plate_root_user.uid}}">{{plate.plate_root_user.name}}</a>
+                        </div>
+                        <div class="panel-footer">
+                            简介
+                        </div>
+                        <div class="panel-body">
+                            {{plate.msg}}
+                        </div>
+                        <div class="panel-footer">
+                            主题数
+                        </div>
+                        <div class="panel-body">
+                            {{plate.count_title}}
+                        </div>
+                    </div>
+				</div>
+				<div class="col-md-9 column">
+                    {% block comment %}
+					<div class="media">
+                        <div>
+                            <p style="text-decoration: none; margin: 18px 5px;">
+                                <a href="/plate/index/{{plate.id}}?order={{'-update_time'}}" style="text-decoration: none; color: black;">全部</a> |
+                                <a href="/plate/index/{{plate.id}}?order={{'-add_time'}}" style="text-decoration: none; color: black;">最新</a> |
+                                <a href="/plate/index/{{plate.id}}?order={{'-count_comment'}}" style="text-decoration: none; color: black;">热门</a> |
+                                <a href="/plate/index/{{plate.id}}?order={{'is_good'}}" style="text-decoration: none; color: black;">精选</a>
+                            </p>
+                        </div>
+                        {% for article in articles %}
+                                <a href="/msg/article?id={{article.tid}}" style="text-decoration: black; color: black;" >
+                                    <div style="margin-top: 13px; height: 100px; background: #F1F2F3;">
+                                        <br>
+                                        <div class="col-md-10 column">
+                                            <div style="margin-left: 20px;">
+                                                <h3 style="margin-top: 5px;">{{article.title}}</h3>
+                                                <p style="font-size: 7px;">{{article.user.name}} <font style="margin-left: 15px;">{{article.add_time}}</font></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 column">
+                                            {% if root_user %}
+                                            <div style="margin-left: 40px; margin-top: 10px;">
+                                                <form action="/msg/selected_article" method="post" id="formId{{article.tid}}">
+                                                    <input type="text" name="tid" value="{{article.tid}}" style="display: none;">
+                                                    <input type="text" name="plate_id" value="{{plate.id}}" style="display: none;">
+                                                    
+                                                    <small><a onclick="document:formId{{article.tid}}.submit()">
+                                                        {% if article.is_good %}取消精选
+                                                        {% else %}精选
+                                                        {% endif %}
+                                                    </a></small>    
+                                                </form>
+                                                <form action="/msg/delete_article" method="post" id="formIda{{article.tid}}">
+                                                    <input type="text" name="tid" value="{{article.tid}}" style="display: none;">
+                                                    <small><a onclick="document:formIda{{article.tid}}.submit()">删除</a></small>
+                                                </form>
+                                                <p>热度：{{article.count_comment}}</p>
+                                            </div> 
+                                            {% else %}
+                                            <div style="margin-left: 40px; margin-top: 45px;">
+                                                <p>热度：{{article.count_comment}}</p>
+                                            </div> 
+                                            {% endif %}
+                                        </div>
+                                        <br>
+                                    </div>
+                                </a>
+                                    
+                                {% endfor %}
+					</div>
+                    {% endblock %}
+				</div>
+				<div class="col-md-0 column">
+				</div>
+			</div>
+            <br><br><br>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
